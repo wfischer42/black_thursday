@@ -8,4 +8,8 @@ class InvoiceItem < DataObject
     @editable = [:quantity, :unit_price]
     super(attributes)
   end
+
+  def total
+    @attributes[:quantity] * @attributes[:unit_price]
+  end
 end

@@ -3,7 +3,7 @@ module FindAllBy
     unless @searchable.include?(type)
       raise NoMethodError, "undefined method `#{type}' for #{self.inspect}"
     end
-    @data_set.values.find_all do |element|
+    all.find_all do |element|
       if substring
         element.send(type).downcase.include?(value.downcase)
       elsif range
@@ -18,8 +18,32 @@ module FindAllBy
     find_all_by(:name, name, substring: true)
   end
 
+  def find_all_by_first_name(first_name)
+    find_all_by(:first_name, first_name, substring: true)
+  end
+
+  def find_all_by_last_name(last_name)
+    find_all_by(:last_name, last_name, substring: true)
+  end
+
+  def find_all_by_result(result)
+    find_all_by(:result, result)
+  end
+
+  def find_all_by_credit_card_number(credit_card_number)
+    find_all_by(:credit_card_number, credit_card_number)
+  end
+
   def find_all_with_description(description)
     find_all_by(:description, description, substring: true)
+  end
+
+  def find_all_by_item_id(id)
+    find_all_by(:item_id, id)
+  end
+
+  def find_all_by_invoice_id(id)
+    find_all_by(:invoice_id, id)
   end
 
   def find_all_by_merchant_id(id)
