@@ -2,10 +2,10 @@ require_relative './data_repository'
 require_relative './merchant'
 
 class MerchantRepository < DataRepository
-  include FindAllByName
 
   def initialize(data)
     super(data, Merchant)
+    @searchable = [:name]
   end
 
   def merchants
