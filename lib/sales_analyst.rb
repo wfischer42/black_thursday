@@ -125,4 +125,18 @@ class SalesAnalyst
     ((counts[status].to_f / total_count) * 100).round(2)
   end
 
+  def invoice_paid_in_full?(id)
+    transactions = @engine.transactions.find_all_by_invoice_id(id)
+    transactions.any? { |trans| trans.result == :success}
+  end
+
+  def invoice_total(id)
+    invoice_items = @engine.invoice_items.find_all_by_invoice_id(id)
+    grand_total = invoice_items.inject(0) do |total, item|
+      # require 'pry'; binding.pry
+      total += item.total
+    end
+    grand_total if invoice_paid_in_full?(id)
+  end
+
 end

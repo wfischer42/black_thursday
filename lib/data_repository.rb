@@ -1,6 +1,7 @@
 require_relative './modules/data_repository_helper'
 
 class DataRepository
+  include FindAllBy
 
   def initialize(data, data_class)
     @data_class = data_class

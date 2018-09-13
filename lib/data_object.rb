@@ -17,13 +17,16 @@ class DataObject
 
   def self.normalize_attributes(attrs)
     normalizer = {id:          'convert_to_int',
+                  item_id:     'convert_to_int',
                   merchant_id: 'convert_to_int',
                   customer_id: 'convert_to_int',
                   invoice_id:  'convert_to_int',
                   unit_price:  'convert_to_big_d_dollars',
                   created_at:  'convert_to_dates',
                   updated_at:  'convert_to_dates',
-                  status:      'convert_to_symbol'}
+                  status:      'convert_to_symbol',
+                  result:      'convert_to_symbol',
+                  quantity:    'convert_to_int'}
 
     attrs.map do |key, value|
       if normalizer[key]

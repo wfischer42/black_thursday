@@ -7,7 +7,8 @@ class SalesAnalystTest < Minitest::Test
   def setup
     @engine = SalesEngine.from_csv(items: './test/data/items.csv',
                                    merchants: './test/data/merchants.csv',
-                                   invoices: './test/data/invoices.csv')
+                                   invoices: './test/data/invoices.csv',
+                                   transactions: './test/data/transactions.csv')
 
     @analyst = @engine.analyst
   end
@@ -194,6 +195,19 @@ class SalesAnalystTest < Minitest::Test
     assert_equal(30.0, @analyst.invoice_status(:pending))
     assert_equal(45.0, @analyst.invoice_status(:shipped))
     assert_equal(25.0, @analyst.invoice_status(:returned))
+  end
+
+  def test_it_can_tell_if_paid_in_full
+    trans1 = stub("transaction", id: 432, invoice_id: 123, result: :success)
+    trans2 = stub("transaction", id: 789, invoice_id: 864, result: :failure)
+    # binding.pry
+    @engine.transactions.stubs(:all).returns([trans1, trans2])
+    assert(@analyst.invoice_paid_in_full?(123))
+    refute(@analyst.invoice_paid_in_full?(864))
+  end
+
+  def test_it_can_give_invoice_total
+    
   end
 
 end
