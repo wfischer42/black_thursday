@@ -9,6 +9,14 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_instance_of InvoiceRepository, repo
   end
 
+  def test_it_has_invoices
+    inv1 = stub('Invoice', id: 0)
+    inv2 = stub('Invoice', id: 1)
+    Invoice.stubs(:from_raw_hash).returns(inv1, inv2)
+    repo = InvoiceRepository.new([{id: 0}, {id: 1}])
+    assert_equal([inv1, inv2], repo.invoices)
+  end
+
   def test_it_can_find_all_by_customer_id
     inv1 = stub('Invoice', id: 123, customer_id: 1234)
     inv2 = stub('Invoice', id: 456, customer_id: 4567)

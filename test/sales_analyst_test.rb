@@ -8,7 +8,9 @@ class SalesAnalystTest < Minitest::Test
     @engine = SalesEngine.from_csv(items: './test/data/items.csv',
                                    merchants: './test/data/merchants.csv',
                                    invoices: './test/data/invoices.csv',
-                                   transactions: './test/data/transactions.csv')
+                                   transactions: './test/data/transactions.csv',
+                                   invoice_items: './test/data/invoice_items.csv',
+                                   customers: './test/data/customers.csv')
 
     @analyst = @engine.analyst
   end
@@ -200,14 +202,28 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_tell_if_paid_in_full
     trans1 = stub("transaction", id: 432, invoice_id: 123, result: :success)
     trans2 = stub("transaction", id: 789, invoice_id: 864, result: :failure)
-    # binding.pry
     @engine.transactions.stubs(:all).returns([trans1, trans2])
     assert(@analyst.invoice_paid_in_full?(123))
     refute(@analyst.invoice_paid_in_full?(864))
   end
 
   def test_it_can_give_invoice_total
-    
+
+  end
+
+  def test_it_can_list_top_buyers
+
+  end
+
+  def test_it_lists_top_20_buyers_by_default
+
+  end
+
+  def test_it_can_give_top_merchant_for_customer
+    expected = 12335955
+    actual = @analyst.top_merchant_for_customer(1)
+    assert_equal(expected, actual.id)
+    assert_instance_of(Merchant, actual)
   end
 
 end
