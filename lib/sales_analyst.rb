@@ -139,6 +139,11 @@ class SalesAnalyst
   end
 
   def top_buyers(number = 20)
+    spending = all_customer_spending
+    top_from_value_hash(number, spending)
+  end
+
+  def all_customer_spending
     invoices = @engine.invoices.all
     spending = invoices.inject(Hash.new(0)) do |cust_spent, invoice|
       customer = @engine.customers.find_by_id(invoice.customer_id)
@@ -146,15 +151,19 @@ class SalesAnalyst
       cust_spent[customer] += cust_total
       cust_spent
     end
-    top_buyers = []
+  end
+
+  def top_from_value_hash(number, hash)
+    top_entries = []
     number.times do
-      top_customer = spending.max_by do |cust, spent|
+      break if hash.length == 0
+      top_entry = hash.max_by do |cust, spent|
         spent
       end[0]
-      spending.delete(top_customer)
-      top_buyers << top_customer
+      hash.delete(top_entry)
+      top_entries << top_entry
     end
-    top_buyers
+    top_entries
   end
 
   def top_merchant_for_customer(cust_id)
@@ -197,7 +206,6 @@ class SalesAnalyst
   end
 
   def items_bought_in_year(cust_id, year)
-    # customer = @engine.customers.find_by_id(cust_id)
     new_invoices = @engine.invoices.find_all_by_customer_id(cust_id)
     years_invoices = find_invoices_for_year(new_invoices, year)
     inv_items = find_inv_items_from_paid_in_full_invoices(years_invoices)

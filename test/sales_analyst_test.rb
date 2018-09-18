@@ -16,17 +16,17 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_exists
-    assert_instance_of SalesAnalyst, @analyst
+    assert_instance_of(SalesAnalyst, @analyst)
   end
 
   def test_it_has_an_engine
-    assert_instance_of SalesEngine, @analyst.engine
+    assert_instance_of(SalesEngine, @analyst.engine)
   end
 
   def test_it_can_return_average_items_per_merchant
     actual = @analyst.average_items_per_merchant
     assert_instance_of Float, actual
-    assert_equal 0.11, actual
+    assert_equal(0.11, actual)
   end
 
   def test_it_can_return_average_items_per_merchant_standard_deviation
@@ -38,7 +38,7 @@ class SalesAnalystTest < Minitest::Test
                                                           [0] * 7)
 
     actual = @analyst.average_items_per_merchant_standard_deviation
-    assert_equal 2.07, actual
+    assert_equal(2.07, actual)
   end
 
   def test_it_returns_merchants_with_high_item_counts
@@ -54,7 +54,7 @@ class SalesAnalystTest < Minitest::Test
       [0] * 2, [0] * 3, [0] * 100)
 
     actual = @analyst.merchants_with_high_item_count
-    assert_equal [merch3], actual
+    assert_equal([merch3], actual)
   end
 
   def test_it_returns_average_item_price_for_merchant
@@ -62,7 +62,7 @@ class SalesAnalystTest < Minitest::Test
     item2 = stub('Item', unit_price: BigDecimal.new(30.00, 4))
     item3 = stub('Item', unit_price: BigDecimal.new(5.00, 4))
     @engine.items.stubs(:find_all_by_merchant_id).with(1).returns([item1, item2, item3])
-    assert_equal 20, @analyst.average_item_price_for_merchant(1)
+    assert_equal(20, @analyst.average_item_price_for_merchant(1))
   end
 
   def test_it_returns_average_average_price_per_merchant
@@ -78,7 +78,7 @@ class SalesAnalystTest < Minitest::Test
     @engine.items.stubs(:find_all_by_merchant_id).returns(
                         [item1, item2],[item3, item4, item5])
 
-    assert_equal 10, @analyst.average_average_price_per_merchant
+    assert_equal(10, @analyst.average_average_price_per_merchant)
   end
 
   def test_it_returns_golden_items
@@ -88,7 +88,7 @@ class SalesAnalystTest < Minitest::Test
     end
     @engine.items.stubs(:all).returns(item_stubs)
 
-    assert_equal [item_stubs[2]], @analyst.golden_items
+    assert_equal([item_stubs[2]], @analyst.golden_items)
   end
 
   def test_it_can_return_average_invoices_per_merchant
@@ -100,8 +100,8 @@ class SalesAnalystTest < Minitest::Test
                                                              [0] * 7)
 
     actual = @analyst.average_invoices_per_merchant
-    assert_instance_of Float, actual
-    assert_equal 4.6, actual
+    assert_instance_of(Float, actual)
+    assert_equal(4.6, actual)
   end
 
   def test_it_can_return_average_invoices_per_merchant_standard_deviation
@@ -113,7 +113,7 @@ class SalesAnalystTest < Minitest::Test
                                                              [0] * 7)
 
     actual = @analyst.average_invoices_per_merchant_standard_deviation
-    assert_equal 2.07, actual
+    assert_equal(2.07, actual)
   end
 
   def test_it_can_return_top_merchants_by_invoice_count
@@ -129,7 +129,7 @@ class SalesAnalystTest < Minitest::Test
       [0] * 5, [0] * 3, [0] * 6, [0] * 2, [0] * 7, [0] * 1000)
 
     actual = @analyst.top_merchants_by_invoice_count
-    assert_equal [merchants[5]], actual
+    assert_equal([merchants[5]], actual)
   end
 
   def test_it_can_return_bottom_merchants_by_invoice_count
@@ -145,7 +145,7 @@ class SalesAnalystTest < Minitest::Test
       [0] * 1000, [0] * 1000, [0] * 1, [0] * 1000, [0] * 1000, [0] * 1000)
 
     actual = @analyst.bottom_merchants_by_invoice_count
-    assert_equal [merchants[2]], actual
+    assert_equal([merchants[2]], actual)
   end
 
   def test_it_can_show_invoice_counts_by_weekday
@@ -208,22 +208,78 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_can_give_invoice_total
+    expected = 5289.13
+    actual = @analyst.invoice_total(2)
+    assert_equal(expected, actual)
+  end
 
+  def test_it_returns_nil_for_invoice_total_if_not_paid_in_full
+    actual = @analyst.invoice_total(3)
+    assert_nil(actual)
   end
 
   def test_it_can_list_top_buyers
-
+    expected_first = 1
+    expected_last = 5
+    actual = @analyst.top_buyers(5)
+    assert_equal(expected_first, actual[0].id)
+    assert_equal(expected_last, actual[-1].id)
   end
 
   def test_it_lists_top_20_buyers_by_default
-
+    expected = 20
+    actual = @analyst.top_buyers
+    assert_equal(expected, actual.length)
   end
 
   def test_it_can_give_top_merchant_for_customer
-    expected = 12335955
+    expected = 12335938
     actual = @analyst.top_merchant_for_customer(1)
     assert_equal(expected, actual.id)
     assert_instance_of(Merchant, actual)
   end
 
+  def test_it_can_find_one_time_buyers
+    expected = 26
+    actual = @analyst.one_time_buyers
+    assert_equal(expected, actual[0].id)
+  end
+
+  def test_it_can_find_top_item_for_one_time_buyers
+    expected = 263512345
+    actual = @analyst.one_time_buyers_top_item
+    assert_equal(expected, actual.id)
+  end
+
+  def test_it_can_find_items_bought_in_year
+    expected = 263519844
+    actual = @analyst.items_bought_in_year(1, 2009)
+    assert_equal(expected, actual[0].id)
+  end
+
+  def test_it_can_find_highest_volume_items_for_customer
+    expected = 263539664
+    actual = @analyst.highest_volume_items(1)
+    assert_equal(expected, actual[0].id)
+  end
+
+  def test_it_can_find_customers_with_unpaid_invoices
+    expected_first = 1
+    expected_last = 25
+    actual = @analyst.customers_with_unpaid_invoices
+    assert_equal(expected_first, actual[0].id)
+    assert_equal(expected_last, actual[-1].id)
+  end
+
+  def test_it_can_find_best_invoice_by_revenue
+    expected = 1
+    actual = @analyst.best_invoice_by_revenue
+    assert_equal(expected, actual.id)
+  end
+
+  def test_it_can_find_best_invoice_by_quantity
+    expected = 1
+    actual = @analyst.best_invoice_by_quantity
+    assert_equal(expected, actual.id)
+  end
 end
