@@ -17,4 +17,23 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal([cust1, cust2], repo.customers)
   end
 
+  def test_it_can_find_customers_by_first_or_last_name
+    cust1 = stub('Customer', id: 0, first_name: 'John', last_name: 'Jones')
+    cust2 = stub('Customer', id: 1, first_name: 'Davey', last_name: 'Public')
+    cust3 = stub('Customer', id: 2, first_name: 'Davey', last_name: 'Jones')
+    Customer.stubs(:from_raw_hash).returns(cust1, cust2, cust3)
+    repo = CustomerRepository.new([{id: 0}, {id: 1}, {id: 2}])
+    assert_equal([cust2, cust3], repo.find_all_by_first_name('Davey'))
+    assert_equal([cust1, cust3], repo.find_all_by_last_name('Jones'))
+  end
+
+  def test_it_cant_find_by_unsearchable_attribute
+    cust1 = stub('Customer', id: 0, first_name: 'John', last_name: 'Jones')
+    Customer.stubs(:from_raw_hash).returns(cust1)
+    repo = CustomerRepository.new([{id: 0}])
+    assert_raises NoMethodError do
+      repo.find_all_by_result(:success)
+    end
+  end
+
 end
