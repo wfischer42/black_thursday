@@ -14,27 +14,27 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2018-09-17T16:45:22-06:00">2018-09-17T16:45:22-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2018-09-18T12:25:08-06:00">2018-09-18T12:25:08-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">99.21%</span></span>
+    (<span class="covered_percent"><span class="green">95.6%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         619.46
+         591.55
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>37</b> files in total.
-    <b>890</b> relevant lines. 
-    <span class="green"><b>883</b> lines covered</span> and
-    <span class="red"><b>7</b> lines missed </span>
+    <b>932</b> relevant lines. 
+    <span class="green"><b>891</b> lines covered</span> and
+    <span class="red"><b>41</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -212,12 +212,12 @@
       
       <tr>
         <td class="strong"><a href="#d38be61deacdb74976bbb03e6f769a849ecbd69f" class="src_link" title="lib/sales_analyst.rb">lib/sales_analyst.rb</a></td>
-        <td class="green strong">96.04 %</td>
-        <td>181</td>
-        <td>101</td>
-        <td>97</td>
-        <td>4</td>
-        <td>73.7</td>
+        <td class="red strong">73.43 %</td>
+        <td>247</td>
+        <td>143</td>
+        <td>105</td>
+        <td>38</td>
+        <td>52.1</td>
       </tr>
       
       <tr>
@@ -3473,11 +3473,11 @@
         <div class="source_table" id="d38be61deacdb74976bbb03e6f769a849ecbd69f">
   <div class="header">
     <h3>lib/sales_analyst.rb</h3>
-    <h4><span class="green">96.04 %</span> covered</h4>
+    <h4><span class="red">73.43 %</span> covered</h4>
     <div>
-      <b>101</b> relevant lines. 
-      <span class="green"><b>97</b> lines covered</span> and
-      <span class="red"><b>4</b> lines missed.</span>
+      <b>143</b> relevant lines. 
+      <span class="green"><b>105</b> lines covered</span> and
+      <span class="red"><b>38</b> lines missed.</span>
     </div>
   </div>
   
@@ -4564,7 +4564,403 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="181">
+        <li class="covered" data-hits="1" data-linenumber="181">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def one_time_buyers</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="182">
+          
+          
+          <code class="ruby">    invoices = @engine.invoices.all</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="183">
+          
+          
+          <code class="ruby">    inv_counts = invoices.inject(Hash.new(0)) do |inv_count, inv|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="184">
+          
+          
+          <code class="ruby">      customer = @engine.customers.find_by_id(inv.customer_id)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="185">
+          
+          
+          <code class="ruby">      inv_count[customer] += 1</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="186">
+          
+          
+          <code class="ruby">      inv_count</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="187">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="188">
+          
+          
+          <code class="ruby">    singles = inv_counts.select do |cust_id, inv_count|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="189">
+          
+          
+          <code class="ruby">      inv_count == 1</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="190">
+          
+          
+          <code class="ruby">    end.keys</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="191">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="192">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="193">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def one_time_buyers_top_item</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="194">
+          
+          
+          <code class="ruby">    buyers = one_time_buyers</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="195">
+          
+          
+          <code class="ruby">    invoices = find_all_invoices_for_customers(buyers)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="196">
+          
+          
+          <code class="ruby">    invoice_items = find_inv_items_from_paid_in_full_invoices(invoices)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="197">
+          
+          
+          <code class="ruby">    find_most_sold_item_from_inv_items(invoice_items)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="198">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="199">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="200">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def items_bought_in_year(cust_id, year)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="201">
+          
+          
+          <code class="ruby">    customer = @engine.customers.find_by_id(cust_id)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="202">
+          
+          
+          <code class="ruby">    new_invoices = @engine.invoices.find_all_by_customer_id(cust_id)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="203">
+          
+          
+          <code class="ruby">    years_invoices = find_invoices_for_year(new_invoices, year)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="204">
+          
+          
+          <code class="ruby">    inv_items = find_inv_items_from_paid_in_full_invoices(years_invoices)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="205">
+          
+          
+          <code class="ruby">    find_items_for_inventory_items(inv_items)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="206">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="207">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="208">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_invoices_for_year(invoices, year)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="209">
+          
+          
+          <code class="ruby">    invoices.find_all do |invoice|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="210">
+          
+          
+          <code class="ruby">      invoice.created_at.year == year</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="211">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="212">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="213">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="214">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_items_for_inventory_items(inv_items)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="215">
+          
+          
+          <code class="ruby">    inv_items.map do |inv_item|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="216">
+          
+          
+          <code class="ruby">      item_id = inv_item.item_id</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="217">
+          
+          
+          <code class="ruby">      @engine.items.find_by_id(item_id)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="218">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="219">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="220">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="221">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_all_invoices_for_customers(customers)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="222">
+          
+          
+          <code class="ruby">    customers.inject([]) do |invoices, buyer|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="223">
+          
+          
+          <code class="ruby">      new_invoices = @engine.invoices.find_all_by_customer_id(buyer.id)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="224">
+          
+          
+          <code class="ruby">      invoices.concat(new_invoices)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="225">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="226">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="227">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="228">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_inv_items_from_paid_in_full_invoices(invoices)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="229">
+          
+          
+          <code class="ruby">    invoices.inject([]) do |inv_items, invoice|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="230">
+          
+          
+          <code class="ruby">      new_inv_items = @engine.invoice_items.find_all_by_invoice_id(invoice.id)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="231">
+          
+          
+          <code class="ruby">      inv_items.concat(new_inv_items) if invoice_paid_in_full?(invoice.id)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="232">
+          
+          
+          <code class="ruby">      inv_items</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="233">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="234">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="235">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="236">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_most_sold_item_from_inv_items(inv_items)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="237">
+          
+          
+          <code class="ruby">    items = inv_items.inject(Hash.new(0)) do |count, inv_item|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="238">
+          
+          
+          <code class="ruby">      item = @engine.items.find_by_id(inv_item.item_id)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="239">
+          
+          
+          <code class="ruby">      count[item] += inv_item.quantity</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="240">
+          
+          
+          <code class="ruby">      count</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="241">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="242">
+          
+          
+          <code class="ruby">    items.max_by do |item, count|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="243">
+          
+          
+          <code class="ruby">      count</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="244">
+          
+          
+          <code class="ruby">    end[0]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="245">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="246">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="247">
           
           
           <code class="ruby">end</code>
