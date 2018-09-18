@@ -9,6 +9,14 @@ class TransactionRepositoryTest < Minitest::Test
     assert_instance_of TransactionRepository, repo
   end
 
+  def test_it_has_transactions
+    trans1 = stub('Transaction', id: 0)
+    trans2 = stub('Transaction', id: 1)
+    Transaction.stubs(:from_raw_hash).returns(trans1, trans2)
+    repo = TransactionRepository.new([{id: 0}, {id: 1}])
+    assert_equal([trans1, trans2], repo.transactions)
+  end
+
   def test_it_can_find_all_transactions_by_credit_card_number
     transaction1 = stub('Transaction', id: 123, credit_card_number: '1234')
     transaction2 = stub('Transaction', id: 456, credit_card_number: '4567')

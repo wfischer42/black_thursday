@@ -19,6 +19,10 @@ class InvoiceItemTest < Minitest::Test
     assert_instance_of(InvoiceItem, @invoice_item)
   end
 
+  def test_it_can_calculate_total
+    assert_equal(144, @invoice_item.total)
+  end
+
   def test_it_can_show_attributes
     assert_equal(123, @invoice_item.id)
     assert_equal(369, @invoice_item.item_id)
